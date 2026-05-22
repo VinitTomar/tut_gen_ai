@@ -96,19 +96,38 @@ uv --version
 **Goal:** be fluent enough in linear algebra, calculus, probability, and PyTorch to read transformer code without flinching.
 
 ### Topics
-- **Linear algebra:** vectors, matrices, matmul, dot product, transpose, broadcasting, eigenvectors (intuition)
+- **Linear algebra:** vectors, matrices, matmul, dot product, transpose, eigenvectors (intuition)
 - **Calculus:** derivatives, partial derivatives, gradients, chain rule (this is what backprop *is*)
-- **Probability:** distributions, expectation, log-likelihood, cross-entropy, KL divergence, softmax
+- **Probability:** distributions, expectation, variance, Bayes' rule, log-likelihood, cross-entropy, KL divergence, softmax
 - **NumPy:** array ops, broadcasting, indexing
 - **PyTorch:** tensors, autograd, `nn.Module`, optimizers, GPU/MPS device, training loop
 
 ### Resources
+
+**Linear algebra**
 - 3Blue1Brown — *Essence of Linear Algebra*: https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
-- 3Blue1Brown — *Essence of Calculus*: https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr
-- 3Blue1Brown — *Neural Networks* (great intuition primer): https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
-- StatQuest (probability/statistics intuition): https://www.youtube.com/@statquest
+
+**Calculus**
+- 3Blue1Brown — *Essence of Calculus* (single-variable foundation): https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr
+- Khan Academy — *Multivariable Calculus* (do the **partial derivatives** + **gradient** units — these are what backprop is built on; the rest is optional): https://www.khanacademy.org/math/multivariable-calculus
+
+**Probability**
+- StatQuest — *Statistics Fundamentals* playlist (distributions, expectation, variance, Bayes): https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9
+- StatQuest individual videos — *softmax*, *cross-entropy*, *KL divergence*, *log-likelihood*: https://www.youtube.com/@statquest
+- *Mathematics for Machine Learning* — Ch 6 (Probability & Distributions), free PDF: https://mml-book.github.io/
+
+**NumPy**
+- CS231n — *Python + NumPy tutorial* (classic, written for ML beginners): https://cs231n.github.io/python-numpy-tutorial/
+- NumPy official *Quickstart* (use as reference): https://numpy.org/doc/stable/user/quickstart.html
+
+**PyTorch**
 - PyTorch — *Learn the Basics*: https://pytorch.org/tutorials/beginner/basics/intro.html
 - PyTorch — *Deep Learning with PyTorch: 60-min Blitz*: https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
+
+**Bridge to Phase 1**
+- 3Blue1Brown — *Neural Networks* (great intuition primer): https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
+
+**Reference book**
 - *Deep Learning* by Goodfellow, Bengio, Courville — Chapters 2–4 only: https://www.deeplearningbook.org/
 
 ### Project: **Linear regression and a 2-layer MLP from scratch in NumPy**, then re-implement both in PyTorch. Train on a tiny synthetic dataset. Confirm gradients match between your manual implementation and `torch.autograd`.

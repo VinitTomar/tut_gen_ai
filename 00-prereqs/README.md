@@ -1,33 +1,77 @@
-# Phase 0 — Foundations: Math + PyTorch (3 weeks, ~35h)
+# Phase 0 — Foundations: Math + PyTorch (3 weeks, ~35 hrs)
 
-See `../ROADMAP.md` for the full plan. This README is the start-here checklist for Phase 0.
+See `../ROADMAP.md` for the full curriculum and `../INSTRUCTIONS.md` for workspace conventions (`uv` tooling, `NOTES.md` learning-log habit). This README is the start-here checklist for Phase 0.
 
 ## Goal
+
 Be fluent enough in linear algebra, calculus, probability, and PyTorch to read transformer code without flinching.
+
+## Hardware
+
+Phase 0 runs on any laptop CPU — **no GPU needed**. The setup script below detects an accelerator if you have one (Apple Silicon MPS or NVIDIA CUDA) so you can use it, but everything in Weeks 1–3 is small enough to train in seconds on CPU. Hold off on cloud GPUs until Phase 2.
+
+## Topics to master
+
+Use this as a syllabus — when working through resources below, make sure you can define and use each item. If you can't, search StatQuest, 3Blue1Brown, or the Goodfellow chapters for that specific term.
+
+- **Linear algebra:** vectors, matrices, matmul, dot product, transpose, eigenvectors (intuition only)
+- **Calculus:** derivatives, partial derivatives, gradients, chain rule (this is what backprop _is_)
+- **Probability:** distributions, expectation, variance, Bayes' rule, log-likelihood, cross-entropy, KL divergence, softmax
+- **NumPy:** array ops, broadcasting, indexing
+- **PyTorch:** tensors, autograd, `nn.Module`, optimizers, GPU/MPS device, training loop
 
 ## Suggested week-by-week
 
 ### Week 1 — Math intuition (~12h)
-- [ ] 3Blue1Brown — *Essence of Linear Algebra* (full series): https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
-- [ ] 3Blue1Brown — *Essence of Calculus* (chapters 1–6 are enough): https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr
-- [ ] 3Blue1Brown — *Neural Networks* (4 episodes): https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
-- [ ] StatQuest — softmax, cross-entropy, KL divergence (search by name on https://www.youtube.com/@statquest)
+
+**Linear algebra**
+
+- [x] 3Blue1Brown — _Essence of Linear Algebra_ (full series): https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
+
+**Calculus**
+
+- [ ] 3Blue1Brown — _Essence of Calculus_ (single-variable; chapters 1–6 are enough): https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr
+- [ ] Khan Academy — _Multivariable Calculus_: do the **partial derivatives** and **gradient** units. These are essential — backprop is the multivariable chain rule. Skip the rest of the playlist (line integrals, surface integrals, etc.): https://www.khanacademy.org/math/multivariable-calculus
+
+**Probability**
+
+- [ ] StatQuest — _Statistics Fundamentals_ playlist (distributions, expectation, variance, Bayes — watch through the basic distributions): https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9
+- [ ] StatQuest — search and watch individually: _softmax_, _cross-entropy_, _KL divergence_, _log-likelihood_: https://www.youtube.com/@statquest
+- [ ] _Mathematics for Machine Learning_ — Chapter 6 (Probability & Distributions), free PDF: https://mml-book.github.io/
+
+**Neural network intuition (bridge to Phase 1)**
+
+- [ ] 3Blue1Brown — _Neural Networks_ (4 episodes — watch after the math, before Phase 1): https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
 
 ### Week 2 — NumPy + PyTorch fluency (~12h)
-- [ ] PyTorch *Learn the Basics*: https://pytorch.org/tutorials/beginner/basics/intro.html
-- [ ] PyTorch *60-min Blitz*: https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
-- [ ] Skim Goodfellow *Deep Learning* Ch 2–4: https://www.deeplearningbook.org/
+
+**NumPy**
+
+- [ ] CS231n — _Python + NumPy tutorial_ (classic, written for ML beginners): https://cs231n.github.io/python-numpy-tutorial/
+- [ ] NumPy official _Quickstart_ (use as reference, not a read-through): https://numpy.org/doc/stable/user/quickstart.html
+
+**PyTorch**
+
+- [ ] PyTorch _Learn the Basics_: https://pytorch.org/tutorials/beginner/basics/intro.html
+- [ ] PyTorch _60-min Blitz_: https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
+
+**Math reference (read alongside)**
+
+- [ ] Skim Goodfellow _Deep Learning_ Ch 2–4: https://www.deeplearningbook.org/
 
 ### Week 3 — Project (~10h)
+
 Project: linear regression and a 2-layer MLP from scratch in NumPy, then re-implement both in PyTorch on a tiny synthetic dataset. Confirm gradients match between your manual implementation and `torch.autograd`.
 
 Suggested files in this folder:
+
 - `01_linreg_numpy.ipynb`
 - `02_mlp_numpy.ipynb`
 - `03_mlp_pytorch.ipynb`
-- `04_gradient_check.ipynb`  ← compares manual gradients vs autograd
+- `04_gradient_check.ipynb` ← compares manual gradients vs autograd
 
 ## Done when
+
 - [ ] You can write a forward + backward pass for an MLP in pure NumPy without looking it up.
 - [ ] You can explain cross-entropy loss in one sentence.
 - [ ] You can write a PyTorch training loop from a blank file.
