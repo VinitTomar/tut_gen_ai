@@ -18,19 +18,20 @@ You want to learn generative AI deeply, in this order:
 
 The original plan used `pip install` in `00-prereqs/README.md`. That gets refined here to use **`uv`** (Astral's modern Rust-based package manager) with **one `pyproject.toml` per phase folder** for isolated environments. Rationale: 10–100× faster, single tool replaces pip+venv+pyenv, and per-phase isolation prevents Phase-1 numpy from breaking Phase-4's `transformers`/`peft` constraints. Concrete file changes are captured in the *Implementation Changes* section near the bottom of this file.
 
-This roadmap is sequenced so each phase compounds on the previous one. The total horizon is ~5–6 months at your pace, organized into six phases. Every phase ends with a concrete buildable project so you have something to point at, not just notes.
+This roadmap is sequenced so each phase compounds on the previous one. The total horizon is ~10–14 months at your pace (calibrated for an engineering team lead with a demanding day job), organized into eight phases (0–7). Every phase ends with a concrete buildable project so you have something to point at, not just notes. A parallel **Leadership & Visibility Track** runs alongside Phase 2 onward — this is what turns "learned LLMs" into "leads AI engineers."
 
 Workspace lives in `/Users/vinittomar/development/study-gen-ai/`. Suggested structure (create as you go):
 
 ```
 study-gen-ai/
-├── 00-prereqs/           # NumPy, PyTorch, math notebooks
-├── 01-neural-nets/       # micrograd, makemore
-├── 02-transformer/       # nanoGPT, your scratch GPT
-├── 03-modern-llm/        # LLaMA-style impl, tokenizers
-├── 04-post-training/     # SFT, LoRA, DPO experiments
-├── 05-paper-reproductions/
-└── 06-apps/              # RAG, agents
+├── 00-prereqs/             # NumPy, PyTorch, math notebooks
+├── 01-neural-nets/         # micrograd, makemore
+├── 02-transformer/         # nanoGPT, your scratch GPT
+├── 03-modern-llm/          # LLaMA-style impl, tokenizers
+├── 04-post-training/       # SFT, LoRA, DPO experiments
+├── 05-ml-systems/          # vLLM, inference benchmarks, quantization
+├── 06-paper-reproductions/ # systems-focused paper repros
+└── 07-apps/                # RAG, agents, production
 ```
 
 ---
@@ -44,7 +45,8 @@ You don't need a GPU to start. Plan to spend $0 for the first ~2 months, then a 
 | Phase 0–1 (math, micrograd) | Laptop CPU | Free |
 | Phase 2 (nanoGPT-scale training) | Google Colab free tier or Kaggle (T4 GPU, free) | Free |
 | Phase 3–4 (training/fine-tuning) | Colab Pro ($10/mo) **or** RunPod / Lambda Labs A100 (~$0.40–0.80/hr, pay-as-you-go) | ~$10–50/mo |
-| Phase 5–6 (paper reproductions, apps) | Same as 3–4 + small spend on Anthropic/OpenAI API for app phase | ~$20–80/mo |
+| Phase 5 (ML systems, inference benchmarks) | RunPod / Lambda Labs (A100 or L40S, pay-as-you-go) — real GPUs needed for serving benchmarks | ~$30–100/mo |
+| Phase 6–7 (paper reproductions, apps) | Same as Phase 5 + small spend on Anthropic/OpenAI API for app phase | ~$30–120/mo |
 
 If you have an Apple Silicon Mac (M1/M2/M3), MPS backend in PyTorch handles Phase 0–2 comfortably; switch to cloud GPU at Phase 3.
 
@@ -283,92 +285,226 @@ Modify your nanoGPT to use RoPE instead of learned positional embeddings, RMSNor
 
 ---
 
-## Phase 5 — Research Paper Reproductions (5 weeks, ~65 hrs)
+## Phase 5 — ML Systems & Inference Infrastructure (6 weeks, ~60 hrs)
 
-**Goal:** read papers and reproduce a non-trivial result. This is the skill that separates "I followed tutorials" from "I can do research."
+**Goal:** turn your distributed-systems background into your unfair advantage. Most ML practitioners can't operate systems at production scale. After this phase you can credibly lead an inference-infra or ML-platform team.
+
+This is the bridge phase from your existing 26M-req/day expertise into AI engineering. Spend extra time here if you have it — the artifacts you produce here are exactly what hiring managers at AI-native companies look for.
+
+### Topics
+- **Inference serving:** continuous batching, KV-cache management, PagedAttention, request scheduling, streaming
+- **Inference engines:** vLLM, TGI (HuggingFace), TensorRT-LLM, llama.cpp — when to pick which
+- **Quantization:** GPTQ, AWQ, GGUF, bitsandbytes — quality/throughput/memory tradeoffs
+- **Speculative decoding:** draft model + verification, when it pays off
+- **Distributed training:** FSDP, DeepSpeed ZeRO stages 1/2/3, multi-node basics, gradient accumulation
+- **GPU economics:** throughput vs latency, batching strategies, cost-per-1M-tokens
+- **Observability / eval infra:** Langfuse, Arize, custom eval pipelines, LLM-as-judge gotchas
+
+### Reading
+- *Efficient Memory Management for LLM Serving with PagedAttention* (vLLM, Kwon et al., 2023): https://arxiv.org/abs/2309.06180
+- *FlashAttention-2* (Dao, 2023): https://arxiv.org/abs/2307.08691
+- *Speculative Decoding* (Leviathan et al., 2022): https://arxiv.org/abs/2211.17192
+- *GPTQ* (Frantar et al., 2022): https://arxiv.org/abs/2210.17323
+- *AWQ* (Lin et al., 2023): https://arxiv.org/abs/2306.00978
+- *ZeRO — Memory Optimizations Toward Training Trillion-Parameter Models* (Rajbhandari et al., 2019): https://arxiv.org/abs/1910.02054
+- vLLM blog: https://blog.vllm.ai/
+- Anyscale blog: https://www.anyscale.com/blog
+- Modal blog (serverless GPU): https://modal.com/blog
+
+### Tooling
+- vLLM: https://github.com/vllm-project/vllm
+- HuggingFace TGI: https://github.com/huggingface/text-generation-inference
+- NVIDIA TensorRT-LLM: https://github.com/NVIDIA/TensorRT-LLM
+- llama.cpp: https://github.com/ggerganov/llama.cpp
+- bitsandbytes: https://github.com/TimDettmers/bitsandbytes
+- HuggingFace `accelerate`: https://huggingface.co/docs/accelerate
+- Langfuse (LLM observability): https://langfuse.com/
+
+### Project: **Benchmarked inference server**
+Take a small open model (TinyLlama, Qwen2.5-0.5B, or your fine-tuned model from Phase 4) and stand up an inference server in three configurations:
+1. Raw HuggingFace `transformers.generate()` (baseline)
+2. vLLM with continuous batching
+3. vLLM with a quantized variant (AWQ or GPTQ)
+
+Measure and document: throughput (tokens/sec under concurrent load), p50/p99 latency, GPU memory utilization, cost-per-1M-tokens on a chosen GPU SKU. Publish the writeup (blog post or repo README + talk). **This artifact alone makes you a credible AI-infrastructure hire.**
+
+### Done when
+- You can explain in plain English why continuous batching beats static batching for LLM serving.
+- You can describe what PagedAttention does and why it works.
+- You have throughput and latency numbers for at least two serving configurations you ran yourself.
+- You can name three reasons to choose vLLM over llama.cpp, and three reasons to do the opposite.
+
+---
+
+## Phase 6 — Systems-Focused Paper Reproductions (5 weeks, ~65 hrs)
+
+**Goal:** read systems-relevant papers and reproduce their core engineering result. This is the skill that separates "I followed tutorials" from "I can drive technical direction in AI engineering."
 
 ### Approach
-Pick **2–3 papers** from the list and reproduce their core claim. Don't try to reproduce GPT-3 (you can't afford it). Pick papers where the *idea* is reproducible at small scale.
+Pick **2–3 papers** from the list and reproduce their core claim. Focus on papers where the *engineering insight* matters more than the model itself — implementing these gives you the muscle to read any new architecture or systems paper and judge it quickly. Skip pure-modeling papers (GPT-3, PaLM, etc.) — the lessons there are about scale, not technique you can replicate.
 
 ### Recommended reproducible papers (with arxiv links)
 - *FlashAttention* (Dao et al., 2022): https://arxiv.org/abs/2205.14135 — implement a tiled attention kernel and benchmark against vanilla PyTorch attention
-- *LoRA* (Hu et al., 2021): https://arxiv.org/abs/2106.09685 — implement LoRA from scratch in raw PyTorch
-- *Switch Transformer / MoE* (Fedus et al., 2021): https://arxiv.org/abs/2101.03961 — implement a small MoE layer and verify routing
-- *Speculative Decoding* (Leviathan et al., 2022): https://arxiv.org/abs/2211.17192 — draft-and-verify with a small + medium model pair
-- *RoPE* (Su et al., 2021): https://arxiv.org/abs/2104.09864
-- *GRPO — DeepSeekMath* (Shao et al., 2024): https://arxiv.org/abs/2402.03300
+- *PagedAttention / vLLM* (Kwon et al., 2023): https://arxiv.org/abs/2309.06180 — reproduce the KV-cache memory-management claims
+- *Speculative Decoding* (Leviathan et al., 2022): https://arxiv.org/abs/2211.17192 — draft-and-verify with a small + medium model pair, measure speedup
+- *Switch Transformer / MoE* (Fedus et al., 2021): https://arxiv.org/abs/2101.03961 — implement a small MoE layer and verify routing balance
+- *GPTQ* (Frantar et al., 2022): https://arxiv.org/abs/2210.17323 — quantize a small model, measure perplexity vs throughput
+- *GRPO — DeepSeekMath* (Shao et al., 2024): https://arxiv.org/abs/2402.03300 — only if you want to go deeper on post-training
+
+(LoRA is already covered hands-on in Phase 4 — skip reproducing it here.)
 
 ### Where to find papers
 - Papers with Code: https://paperswithcode.com/
 - arXiv `cs.CL` listings: https://arxiv.org/list/cs.CL/recent
 - Hugging Face Daily Papers: https://huggingface.co/papers
 
-### How to read a paper (rough recipe)
-1. Read abstract, intro, conclusion. Skip everything else.
-2. Re-read with the figures.
-3. Now read methods carefully. Take notes on what the math is doing.
+### How to read a systems paper (rough recipe)
+1. Read abstract, intro, conclusion. Skip everything else on first pass.
+2. Re-read with the figures. Look for throughput/latency/memory plots — that's usually the real contribution.
+3. Now read methods carefully. Identify the *single key insight* (e.g., for vLLM: "treat KV cache like OS virtual memory pages").
 4. Find the official code (Papers with Code, or paper's GitHub link).
 5. Run their code as-is. Reproduce one number from the paper.
-6. Re-implement the core idea from scratch in your own repo. Verify it matches.
+6. Re-implement the core idea from scratch in your own repo. Verify it matches qualitatively (you won't match exactly without their compute).
 
 ### Project: **One paper reproduction repository per paper**, each with:
-- A README explaining the paper's claim
-- Your implementation
-- A notebook showing your numbers vs the paper's numbers (or a justification of any gap)
+- A README explaining the paper's claim and engineering insight (not just the math)
+- Your implementation (from-scratch where feasible)
+- A benchmark notebook showing your numbers vs the paper's numbers (or a justification of any gap)
+- Optionally: a public writeup (blog post / talk) — feeds the Leadership & Visibility Track
 
 ### Done when
-- You've reproduced at least one non-trivial result and can defend why your numbers do (or don't) match the paper.
-- You can read a new architecture paper and skim it to its core contribution in <30 min.
+- You've reproduced at least one non-trivial systems result and can defend why your numbers do (or don't) match the paper.
+- You can read a new architecture or systems paper and identify its core engineering contribution in <30 min.
+- You have at least one repro repo polished enough to send to a hiring manager.
 
 ---
 
-## Phase 6 — Real-World Applications: RAG, Agents, Production (4 weeks, ~55 hrs)
+## Phase 7 — Real-World Applications: RAG, Agents, Production at Scale (4–5 weeks, ~65 hrs)
 
-**Goal:** apply everything to ship something useful. This is where the theory pays off.
+**Goal:** ship a production-grade LLM application. Your distributed-systems background means this phase should look more like "real production engineering" than "tutorial RAG demo."
 
 ### Topics
 - **Embeddings:** sentence-transformers, OpenAI/Voyage/Cohere embedding APIs, pooling strategies
-- **Vector databases:** pgvector, FAISS, Qdrant, Pinecone — when to use which
-- **RAG architecture:** chunking strategies, hybrid search (BM25 + dense), reranking, query rewriting
-- **Agent loops:** ReAct, function calling, tool use, multi-step planning
-- **Frameworks:** LangChain, LlamaIndex, LangGraph — what each is good at, when to skip them
-- **Evaluation:** RAGAS, custom evals, LLM-as-judge (and its failure modes)
-- **Production concerns:** streaming, prompt caching, cost optimization, latency, observability (Langfuse, Arize)
+- **Vector databases:** pgvector, FAISS, Qdrant, Pinecone — when to use which (your scale lens applies directly)
+- **RAG architecture:** chunking strategies, hybrid search (BM25 + dense), reranking, query rewriting, eval-driven retrieval tuning
+- **Agent loops:** ReAct, function calling, tool use, multi-step planning, failure modes
+- **Frameworks:** LangChain, LlamaIndex, LangGraph — what each is good at, when to skip them entirely
+- **Evaluation (this is where engineering shines):** RAGAS, custom evals, LLM-as-judge (and its failure modes), regression tests for prompts, golden datasets
+- **Production concerns at scale:** streaming, prompt caching, cost optimization, latency budgets, observability (Langfuse, Arize, Datadog integrations), multi-tenant inference, rate limiting, fallback strategies
 
 ### Reading
 - Anthropic — *Building Effective Agents* (essential, very pragmatic): https://www.anthropic.com/engineering/building-effective-agents
-- Anthropic — *Engineering* blog index (lots of agent/tool-use posts): https://www.anthropic.com/engineering
+- Anthropic — *Engineering* blog index: https://www.anthropic.com/engineering
 - Anthropic API docs (prompt caching, tool use, extended thinking): https://docs.anthropic.com/
-- Anthropic Cookbook (notebooks for RAG, tool use, agents): https://github.com/anthropics/anthropic-cookbook
+- Anthropic Cookbook: https://github.com/anthropics/anthropic-cookbook
+- Eugene Yan — *Patterns for Building LLM-based Systems & Products*: https://eugeneyan.com/writing/llm-patterns/
+- Chip Huyen — *Designing Machine Learning Systems* (book, O'Reilly)
 - Lilian Weng — *LLM Powered Autonomous Agents*: https://lilianweng.github.io/posts/2023-06-23-agent/
 - Lilian Weng — *Prompt Engineering*: https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/
 - LangChain docs: https://python.langchain.com/docs/introduction/
 - LangGraph docs: https://langchain-ai.github.io/langgraph/
 - LlamaIndex docs: https://docs.llamaindex.ai/
-- RAGAS (RAG evaluation): https://docs.ragas.io/
+- RAGAS: https://docs.ragas.io/
 - pgvector: https://github.com/pgvector/pgvector
 - FAISS: https://github.com/facebookresearch/faiss
 - Qdrant: https://qdrant.tech/documentation/
 - sentence-transformers: https://www.sbert.net/
 
-### Project (capstone): **Two-part build**
-1. **Domain RAG agent:** pick a corpus you care about (your own notes, a textbook PDF, a codebase, a podcast transcript collection). Build a RAG system over it with hybrid retrieval, reranking, and a chat interface. Evaluate retrieval quality with a small handcrafted eval set.
-2. **Fine-tuned domain model:** take the open model you fine-tuned in Phase 4 and integrate it as the generator in your RAG pipeline. Compare it to using Claude/GPT as the generator: what's the quality gap, and where does the open model surprise you?
+### Project (capstone): **Production-grade LLM application with full eval & observability**
+
+Build a system, not a demo. Required ingredients:
+
+1. **Domain RAG agent over a corpus you care about** (your own notes, codebase, podcast transcripts, etc.) with hybrid retrieval and reranking.
+2. **Real eval set** — handcrafted golden dataset (50+ examples), retrieval metrics (recall@k), generation metrics (faithfulness, relevance), LLM-as-judge with at least one calibration check.
+3. **Cost & latency budgets enforced** — p95 latency target, $/1k-queries target, with measurements.
+4. **Observability** — every request traced, every eval run logged, failure modes visible (Langfuse or equivalent).
+5. **Two generator options compared:** Claude/GPT API vs your fine-tuned open model (from Phase 4) served via your inference stack (from Phase 5). Document the quality gap and where each wins.
+6. **Deployed** somewhere reachable (not just localhost). Render, Fly.io, Modal, or self-hosted.
+
+Write the whole thing up publicly. This is your capstone artifact and a key piece of your leadership track record.
 
 ### Done when
-- You have a deployed (even if just locally) end-to-end LLM application.
-- You can articulate when fine-tuning is worth it vs when prompting + RAG is enough.
+- You have a deployed, evaluated, observable LLM application.
+- You can articulate when fine-tuning is worth it vs prompting + RAG, with numbers.
 - You have an evaluation set and metrics, not just vibes.
+- The system handles at least 10 concurrent users without falling over — you're an experienced engineer; make this real.
+
+---
+
+## Leadership & Visibility Track (parallel from Phase 2 onward)
+
+This is not a phase — it's a continuous practice you run alongside the technical work. For your goal (AI/LLM engineering **leadership**, not pure IC), this matters as much as any phase.
+
+### Public artifacts
+- **One blog post per phase, minimum.** Re-implementations, benchmarks, and tradeoffs > opinion pieces.
+- Suggested platforms: personal blog, Substack, Medium. Cross-post to LinkedIn for visibility.
+- Pin your repos and writeups on GitHub. Hiring managers find people through these.
+
+### Open-source contributions
+- Target one merged PR per phase into a relevant project: `vllm`, `transformers`, `peft`, `trl`, `langchain`, `llama.cpp`, etc.
+- Start with bugs and docs PRs to learn the contribution flow. Then non-trivial code.
+- A merged PR into vLLM is worth a thousand resume bullets for an AI-infra role.
+
+### Talks
+- Submit one talk to a meetup or conference by end of Phase 5.
+- Candidates: AI Engineer Summit, PyData, local ML/AI meetups (most cities have monthly ones), company-internal tech talks.
+- Your inference benchmark from Phase 5 makes an excellent first talk.
+
+### Network strategically
+- Follow + thoughtfully engage with AI **engineering** leaders (not just researchers): Sebastian Raschka, Jeremy Howard, the vLLM team (Woosuk Kwon, Zhuohan Li), Modal/Anyscale engineers, Eugene Yan, Hamel Husain.
+- Twitter/X is where this conversation happens in real time. Substack and LinkedIn are secondary.
+
+### Internal track (in your current role)
+- Identify and lead **one LLM use case in your current company within 6 months**. Land it.
+- Now you have "led production AI engineering at scale" on your resume — the single strongest signal for AI-engineering leadership roles.
+- Even better: write internally about it (postmortems, design docs, RFCs) — those translate to external talks later.
+
+### What NOT to chase
+- Pure research publishing — wrong tier for your goal, high opportunity cost.
+- Generic "AI thought leadership" content (LinkedIn-style hot takes). Build things; the content writes itself.
+- Certifications (DeepLearning.AI, etc.) — not bad, but won't move the needle. Artifacts > certificates.
+
+---
+
+## Career Path & Stepping Stones
+
+The roadmap teaches you LLM engineering. This section bridges from "finished the roadmap" to "leading AI engineering teams." Be honest with yourself about the timeline — jumping straight from "engineering lead at current company" to "leading at a frontier lab" is rare. Almost everyone goes through stepping stones.
+
+### Realistic trajectory
+
+| Stage | Timeline (from now) | Target role | Required artifacts |
+|---|---|---|---|
+| **Stage 0 — Current state** | Now | Engineering team lead, distributed systems (26M req/day) | Already in place |
+| **Stage 1 — Apply in current role** | Months 0–6 | Same role + lead one LLM use case in current company | First few public blog posts, Phase 0–2 done |
+| **Stage 2 — Visible AI engineer** | Months 6–14 | Same role, but with public AI engineering track record | Phase 3–5 done, 1+ OSS PRs merged, inference benchmark public |
+| **Stage 3 — AI-native role** | Months 12–24 | ML platform / inference-infra lead **OR** engineering lead at AI-native Series A–C startup | Phase 6–7 done, paper reproductions, conference talk, capstone deployed |
+| **Stage 4 — Senior AI engineering leadership** | Year 2–3+ | Senior eng lead / EM at an AI-focused company | Track record at Stage 3 role |
+| **Stage 5 — Frontier lab leadership** | Year 3–5+ | Engineering management at Anthropic / OpenAI / Google DeepMind / etc. | Track record at Stage 4 role |
+
+### Key transitions
+
+- **Stage 1 → 2** is mostly time + consistent public output. Don't skip the writing.
+- **Stage 2 → 3** is the biggest leap. Two patterns work:
+  - *Internal pivot:* if your current company is adopting LLMs heavily, position yourself as the AI-infra lead internally.
+  - *External jump:* leverage your AI portfolio + existing leadership experience to interview at AI-native companies. Expect 6–12 months of focused interviewing.
+- **Stage 3 → 4 → 5** is mostly track record. Frontier labs hire leaders who've already led AI engineering elsewhere. The "Anthropic in 18 months" framing is unrealistic; the "Anthropic in 3–5 years" framing is genuinely achievable from your starting point.
+
+### Adjust expectations honestly
+- This is a 2–5 year journey, not a 6-month sprint. Pace yourself.
+- You don't need to finish the roadmap before starting Stage 1 internal work. The two compound.
+- "AI engineering leadership" is a small, competitive market — but you have an unusually relevant background. Use it.
 
 ---
 
 ## Ongoing Habits (do these in parallel from Phase 1 onward)
 
-- **Read one paper per week.** Even just abstract + figures. Build the muscle.
+- **Read one paper per week.** Even just abstract + figures. Build the muscle. Mix model papers and systems papers (FlashAttention, vLLM, etc.) — your goal needs both.
 - **Follow:** Andrej Karpathy, Sebastian Raschka, Lilian Weng, Jay Alammar, Anthropic/OpenAI/DeepMind blog feeds.
-- **Newsletter:** *Import AI* (Jack Clark), *The Batch* (Andrew Ng).
-- **Twitter/X:** if you can stomach it, this is where LLM research lives in real time.
+- **For ML systems specifically:** vLLM blog, Anyscale blog, Modal blog, NVIDIA technical blog, the *Latent Space* podcast (Swyx & Alessio — AI-engineering focused), Eugene Yan, Hamel Husain, Chip Huyen.
+- **Newsletter:** *Import AI* (Jack Clark), *The Batch* (Andrew Ng), Sebastian Raschka's *Ahead of AI*.
+- **Twitter/X:** if you can stomach it, this is where LLM research and AI engineering live in real time.
 - **Keep a learning log** in `study-gen-ai/NOTES.md` — short entries on what you learned each session. After 6 months it's gold.
+- **Publish from the log.** Once a week, turn one log entry into a polished public post. This is the engine for your Leadership & Visibility Track.
 
 ---
 
@@ -416,8 +552,9 @@ Pick **2–3 papers** from the list and reproduce their core claim. Don't try to
 - **End of Phase 2:** you have a trained GPT generating text in your repo.
 - **End of Phase 3:** you've trained a LLaMA-style model and benchmarked it.
 - **End of Phase 4:** you have a fine-tuned model that demonstrably behaves differently from its base.
-- **End of Phase 5:** you have at least one paper reproduction repo.
-- **End of Phase 6:** you have a working RAG agent on a corpus you care about.
+- **End of Phase 5:** you have a benchmarked inference server with measured throughput/latency numbers — published writeup.
+- **End of Phase 6:** you have at least one systems-focused paper reproduction repo.
+- **End of Phase 7:** you have a deployed, evaluated, observable LLM application.
 
 If a phase is taking >1.5x the estimate, that's fine — slow is fine. If you skip the projects, you haven't actually learned the phase. The projects are non-negotiable.
 
@@ -425,16 +562,19 @@ If a phase is taking >1.5x the estimate, that's fine — slow is fine. If you sk
 
 ## Total Time Estimate
 
-| Phase | Hours | Calendar weeks (at 12 hrs/wk) |
+| Phase | Hours | Calendar weeks (at 10 hrs/wk) |
 |---|---|---|
-| 0 — Foundations | 35 | 3 |
-| 1 — NN + first LM | 50 | 4 |
-| 2 — Transformer | 65 | 5–6 |
-| 3 — Modern LLM | 55 | 4–5 |
-| 4 — Post-training | 55 | 4–5 |
-| 5 — Paper reproductions | 65 | 5–6 |
-| 6 — Apps | 55 | 4–5 |
-| **Total** | **~380 hrs** | **~6 months** |
+| 0 — Foundations | 35 | 3–4 |
+| 1 — NN + first LM | 50 | 5 |
+| 2 — Transformer | 65 | 6–7 |
+| 3 — Modern LLM | 55 | 5–6 |
+| 4 — Post-training | 55 | 5–6 |
+| 5 — ML Systems & Inference Infra (new) | 60 | 6 |
+| 6 — Systems-focused paper reproductions | 65 | 6–7 |
+| 7 — Apps at scale | 65 | 6–7 |
+| **Total** | **~450 hrs** | **10–14 months** |
+
+10 hrs/week is the honest baseline for an engineering team lead with a demanding day job; 12–15 hrs/week (the original assumption) shortens the calendar to ~8–10 months but is hard to sustain without burnout. The Leadership & Visibility Track adds ~2 hrs/week on top of the technical work.
 
 ---
 
@@ -461,7 +601,7 @@ Sync the Tooling addition into ROADMAP.md so the workspace copy and the plan fil
 Don't pre-create `pyproject.toml` files in `01-neural-nets/` through `06-apps/`. The convention documented in INSTRUCTIONS.md is "run `uv init` when you enter a phase." Pre-creating them now would lock dependency versions far in advance of when you'll actually use them and creates bit-rot.
 
 ### Files NOT changed
-- The other phase READMEs (`01-...` through `06-...`) don't currently mention pip and don't need package-manager language inline. They'll inherit the convention from INSTRUCTIONS.md.
+- The other phase READMEs (`01-...` through `07-...`) don't currently mention pip and don't need package-manager language inline. They'll inherit the convention from INSTRUCTIONS.md.
 - `NOTES.md` — unaffected.
 
 ## Verification
