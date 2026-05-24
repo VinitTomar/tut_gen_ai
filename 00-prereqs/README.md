@@ -30,8 +30,8 @@ Use this as a syllabus — when working through resources below, make sure you c
 
 **Calculus**
 
-- [ ] 3Blue1Brown — _Essence of Calculus_ (single-variable; chapters 1–6 are enough): https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr
-- [ ] Khan Academy — _Multivariable Calculus_: do the **partial derivatives** and **gradient** units. These are essential — backprop is the multivariable chain rule. Skip the rest of the playlist (line integrals, surface integrals, etc.): https://www.khanacademy.org/math/multivariable-calculus
+- [x] 3Blue1Brown — _Essence of Calculus_ (single-variable; chapters 1–6 are enough): https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr
+- [x] Khan Academy — _Multivariable Calculus_: do the **partial derivatives** and **gradient** units. These are essential — backprop is the multivariable chain rule. Skip the rest of the playlist (line integrals, surface integrals, etc.): https://www.khanacademy.org/math/multivariable-calculus
 
 **Probability**
 
