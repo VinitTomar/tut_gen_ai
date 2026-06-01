@@ -35,9 +35,27 @@ Use this as a syllabus — when working through resources below, make sure you c
 
 **Probability**
 
-- [ ] StatQuest — _Statistics Fundamentals_ playlist (distributions, expectation, variance, Bayes — watch through the basic distributions): https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9
-- [ ] StatQuest — search and watch individually: _softmax_, _cross-entropy_, _KL divergence_, _log-likelihood_: https://www.youtube.com/@statquest
-- [ ] _Mathematics for Machine Learning_ — Chapter 6 (Probability & Distributions), free PDF: https://mml-book.github.io/
+StatQuest's _Statistics Fundamentals_ playlist has 50+ videos — you do **not** need all of them. Watch the specific videos below, then search the channel for the ML-specific topics that aren't in the playlist.
+
+- [x] From the StatQuest _Statistics Fundamentals_ playlist (https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9), watch in playlist order (numbers are positions in the playlist):
+  - #1 — Histograms, Clearly Explained
+  - #2 — The Main Ideas behind Probability Distributions
+  - #3 — The Normal Distribution, Clearly Explained
+  - #6 — Population and Estimated Parameters, Clearly Explained
+  - #7 — Calculating the Mean, Variance and Standard Deviation, Clearly Explained
+  - #20 — Conditional Probabilities, Clearly Explained
+  - #21 — Bayes' Theorem, Clearly Explained
+  - #22 — Expected Values, Main Ideas
+  - #23 — Expected Values for Continuous Variables
+  - #24 — The Binomial Distribution and Test, Clearly Explained
+  - #54 — In Statistics, Probability is not Likelihood
+  - #55 — Maximum Likelihood, clearly explained
+- [x] From the StatQuest channel (https://www.youtube.com/@statquest), search and watch individually (these aren't in the playlist above):
+  - _Neural Networks Part 5: ArgMax and SoftMax_: https://www.youtube.com/watch?v=KpKog-L9veg
+  - _Neural Networks Part 6: Cross Entropy_: https://www.youtube.com/watch?v=6ArSys5qHAU (and _Entropy (for data science), Clearly Explained!!!_ as a primer: https://www.youtube.com/watch?v=YtebGVx-Fxw)
+  - _The KL Divergence — CLEARLY EXPLAINED!_: https://www.youtube.com/watch?v=9_eZHt2qJs4
+  - _Log-likelihood_ (covered in the Maximum Likelihood video above, but watch the dedicated one too if the concept hasn't clicked)
+- [ ] _Mathematics for Machine Learning_ — Chapter 6 (Probability & Distributions), free PDF: https://mml-book.github.io/ — read alongside, use as the textbook reference
 
 **Neural network intuition (bridge to Phase 1)**
 

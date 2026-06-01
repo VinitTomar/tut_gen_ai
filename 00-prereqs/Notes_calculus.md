@@ -21,7 +21,7 @@ What clicked:
 - Power rule $$\frac{dx^n}{dx} = nx^{n-1}$$
 - Sum rule $$\frac{d}{dx}(g(x)+h(x))=\frac{dg}{dx}+\frac{dh}{dx}$$
 - Product rule $$f(x)=g(x)h(x), \frac{df}{dx}=\frac{dg}{dx} \cdot h(x) + \frac{dh}{dx} \cdot g(x)$$
-- Function composition rule $$\frac{d}{dx}g(h(x))=\frac{dg}{dh} \cdot \frac{dh}{dx} = \frac{dg}{dx}$$
+- Function composition rule or Chain rule $$\frac{d}{dx}g(h(x))=\frac{dg}{dh} \cdot \frac{dh}{dx} = \frac{dg}{dx}$$
 - `Implicit differentiation` is a technique for finding $dy/dx$ when assuming $y$ is an implicit function of $x$, i.e. defined by an equation relating $x$ and $y$, without first solving the equation for y.
 
 What is still fuzzy / questions to chase:
@@ -46,3 +46,5 @@ What clicked:
 - We can also solve implicit differentiation with help of partial derivative using this formula, if $f(x,y)=0$ then $$\frac{dy}{dx}=-\frac{F_x}{F_y} \text{, where } F_x=\frac{\partial f}{\partial x}, F_y=\frac{\partial f}{\partial y}$$
 - `Second partial derivative` is the derivative done one more time of already existing partial derivative, e.g. $F_{xx}$, $F_{xy}$, $F_{yx}$ or $F_{yy}$. Here $F_{xy}$ represents derivate of a function $f(x,y)$, when first derivative of $f(x,y)$ is done for $x$ & next derivative of first is done for $y$. `High order derivative` is the next derivate done for any variable of already existing second partial derivative or other high order derivatives.
 - `Gradient` $\nabla{g}$ is a vector of partial derivatives of a multi-variable function, evaluated at a point. It points in the direction of steepest increase of the function, and its magnitude gives the rate of increase in that direction. $$\nabla f = \begin{bmatrix} \dfrac{\partial f}{\partial x} \\[1em] \dfrac{\partial f}{\partial y} \\[1em] \vdots \end{bmatrix}$$
+
+Time spent: ~1hrs
