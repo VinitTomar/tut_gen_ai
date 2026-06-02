@@ -59,13 +59,13 @@ StatQuest's _Statistics Fundamentals_ playlist has 50+ videos — you do **not**
 
 **Neural network intuition (bridge to Phase 1)**
 
-- [ ] 3Blue1Brown — _Neural Networks_ (4 episodes — watch after the math, before Phase 1): https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
+- [x] 3Blue1Brown — _Neural Networks_ (4 episodes — watch after the math, before Phase 1): https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
 
 ### Week 2 — NumPy + PyTorch fluency (~12h)
 
 **NumPy**
 
-- [ ] CS231n — _Python + NumPy tutorial_ (classic, written for ML beginners): https://cs231n.github.io/python-numpy-tutorial/
+- [x] CS231n — _Python + NumPy tutorial_ (classic, written for ML beginners): https://cs231n.github.io/python-numpy-tutorial/
 - [ ] NumPy official _Quickstart_ (use as reference, not a read-through): https://numpy.org/doc/stable/user/quickstart.html
 
 **PyTorch**
