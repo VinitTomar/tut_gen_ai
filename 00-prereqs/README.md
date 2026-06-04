@@ -70,7 +70,7 @@ StatQuest's _Statistics Fundamentals_ playlist has 50+ videos — you do **not**
 
 **PyTorch**
 
-- [ ] PyTorch _Learn the Basics_: https://pytorch.org/tutorials/beginner/basics/intro.html
+- [x] PyTorch _Learn the Basics_: https://pytorch.org/tutorials/beginner/basics/intro.html
 - [ ] PyTorch _60-min Blitz_: https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
 
 **Math reference (read alongside)**
