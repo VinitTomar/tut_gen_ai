@@ -71,7 +71,7 @@ StatQuest's _Statistics Fundamentals_ playlist has 50+ videos — you do **not**
 **PyTorch**
 
 - [x] PyTorch _Learn the Basics_: https://pytorch.org/tutorials/beginner/basics/intro.html
-- [ ] PyTorch _60-min Blitz_: https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
+- [x] PyTorch _60-min Blitz_: https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
 
 **Math reference (read alongside)**
 
@@ -80,6 +80,21 @@ StatQuest's _Statistics Fundamentals_ playlist has 50+ videos — you do **not**
 ### Week 3 — Project (~10h)
 
 Project: linear regression and a 2-layer MLP from scratch in NumPy, then re-implement both in PyTorch on a tiny synthetic dataset. Confirm gradients match between your manual implementation and `torch.autograd`.
+
+**Learn first — Linear regression**
+
+- [ ] StatQuest — _Linear Regression, Clearly Explained_: https://www.youtube.com/watch?v=nk2CQITm_eo
+- [ ] StatQuest — _Gradient Descent, Step-by-Step_ (how linreg actually trains): https://www.youtube.com/watch?v=sDv4f4s2SB8
+- [ ] StatQuest — _Linear Regression in PyTorch_ (implementation walk-through): https://www.youtube.com/watch?v=iyn2zdALii8
+- [ ] Goodfellow _Deep Learning_ §5.1.4 — _Example: Linear Regression_ (formal treatment, ~1 page): https://www.deeplearningbook.org/contents/ml.html
+
+**Learn first — MLP (Multi-Layer Perceptron)**
+
+- [ ] Re-watch 3Blue1Brown _Neural Networks_ eps 1–2 with fresh eyes now that linreg makes sense
+- [ ] StatQuest — _Neural Networks Part 1, 2, 3_ (Inside the Black Box, Backprop Main Ideas, Backprop Details). Search on https://www.youtube.com/@statquest
+- [ ] **Andrej Karpathy — _Neural Networks: Zero to Hero_, video 1 (`micrograd`)** — builds autograd from scratch; the single most valuable video for an aspiring LLM engineer: https://www.youtube.com/playlist?list=PLAdk-EyP1ND8MqJEJnSvaoUShrAWYe51U
+- [ ] Karpathy — _Zero to Hero_ video 2 (`makemore` part 1) — bigram MLP from scratch in PyTorch
+- [ ] Michael Nielsen — _Neural Networks and Deep Learning_, Ch 1–2 (free, online; builds an MLP for MNIST in NumPy — pairs with this project): http://neuralnetworksanddeeplearning.com/chap1.html
 
 Suggested files in this folder:
 
