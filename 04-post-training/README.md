@@ -61,3 +61,9 @@ Suggested files:
 - [ ] You've successfully fine-tuned a model and verified the behavior change with concrete examples.
 - [ ] You understand what LoRA's `r` (rank) parameter does and how to choose it.
 - [ ] You can defend a choice of LoRA vs full fine-tuning vs prompting for a hypothetical task.
+
+## Leadership & Visibility (this phase)
+See the full section in `../ROADMAP.md`. For Phase 4:
+- [ ] **Blog post** — "Fine-tuning a small model with QLoRA + DPO: what actually changed." Use your before/after side-by-side outputs as the hook.
+- [ ] **OSS PR** — `peft` or `trl` are ideal targets now that you've used them hands-on; a bug fix or doc clarification from a snag you hit counts.
+- [ ] **Internal** — if you started an LLM use case in Phase 3, fine-tuning may now be the unlock. Keep pushing it toward "landed."

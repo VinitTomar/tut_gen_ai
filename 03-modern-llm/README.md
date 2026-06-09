@@ -59,3 +59,9 @@ Suggested files:
 - [ ] You know what FlashAttention optimizes and roughly how (tiling + recomputation).
 - [ ] Given a parameter count, you can compute the Chinchilla-optimal number of training tokens.
 - [ ] Your LLaMA-style model trains successfully on TinyStories and ships with a working KV cache.
+
+## Leadership & Visibility (this phase)
+See the full section in `../ROADMAP.md`. For Phase 3:
+- [ ] **Blog post** — "GPT (2017) vs LLaMA: RoPE, RMSNorm, SwiGLU, GQA explained by re-implementing them." Show the loss-curve comparison against your Phase 2 GPT.
+- [ ] **OSS PR** — a non-trivial-ish docs or example contribution to `transformers` or `rasbt/LLMs-from-scratch` (whose code you'll be reading this phase).
+- [ ] **Internal** — by now you can credibly pitch *one LLM use case at your company*. Start the conversation (target: landed within 6 months).

@@ -56,3 +56,9 @@ Suggested files:
 - [ ] You can explain why we use causal masking and what would happen without it.
 - [ ] You've trained a transformer end-to-end and seen the loss curve flatten.
 - [ ] Your own-corpus model generates recognizable (even if rough) samples.
+
+## Leadership & Visibility (this phase)
+The track starts here. See the full section in `../ROADMAP.md`. For Phase 2:
+- [ ] **Blog post** — "I built GPT from scratch: what self-attention actually does." Pair it with your loss curves and a few generated samples. Cross-post to LinkedIn.
+- [ ] **First OSS PR** — start small: a docs fix or typo in `nanoGPT`, `minbpe`, or `transformers` just to learn the contribution flow.
+- [ ] **Learning log** — keep short entries in `../NOTES.md`; this blog post should come straight out of it.

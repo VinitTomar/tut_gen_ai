@@ -77,3 +77,9 @@ Suggested files:
 - [ ] You can describe what PagedAttention does and why it works.
 - [ ] You have throughput and latency numbers for at least two serving configurations you ran yourself.
 - [ ] You can name three reasons to choose vLLM over llama.cpp, and three reasons to do the opposite.
+
+## Leadership & Visibility (this phase)
+This is your highest-leverage visibility phase. See the full section in `../ROADMAP.md`. For Phase 5:
+- [ ] **Blog post** — your benchmarked inference server *is* the post: throughput/latency/cost across the three configs. This single artifact makes you a credible AI-infra hire.
+- [ ] **First talk** — submit the benchmark as a talk to a meetup or conference (target: by end of this phase). AI Engineer Summit, PyData, or a local ML meetup.
+- [ ] **OSS PR** — a merged PR into `vllm` is worth a thousand resume bullets for an infra role. Start with a docs/bug PR, then aim for real code.

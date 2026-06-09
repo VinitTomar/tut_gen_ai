@@ -70,3 +70,9 @@ Suggested files:
 - [ ] You can articulate when fine-tuning is worth it vs prompting + RAG, with numbers.
 - [ ] You have an evaluation set and metrics, not just vibes.
 - [ ] The system handles at least 10 concurrent users without falling over — you're an experienced engineer; make this real.
+
+## Leadership & Visibility (this phase)
+See the full section in `../ROADMAP.md`. For Phase 7:
+- [ ] **Capstone writeup** — the public post on your deployed, evaluated, observable app is the headline artifact of the whole roadmap. Architecture, eval methodology, cost/latency numbers, fine-tuned-vs-frontier comparison.
+- [ ] **OSS PR** — `langchain`, `llamaindex`, `ragas`, or `langfuse` — a fix or integration from something you hit while building.
+- [ ] **Talk + internal** — pitch this as a talk and, if it maps to your company, as the internal LLM use case you can now point to as "led production AI engineering at scale."

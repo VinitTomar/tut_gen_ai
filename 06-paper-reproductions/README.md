@@ -63,3 +63,9 @@ Suggested layout (one folder per paper):
 - [ ] You've reproduced at least one non-trivial systems result and can defend why your numbers do (or don't) match the paper.
 - [ ] You can read a new architecture or systems paper and identify its core engineering contribution in <30 min.
 - [ ] You have at least one repro repo polished enough to send to a hiring manager.
+
+## Leadership & Visibility (this phase)
+See the full section in `../ROADMAP.md`. For Phase 6:
+- [ ] **Blog post** — one writeup per repro: the paper's claim, your numbers vs theirs, and an honest account of any gap. "I reproduced PagedAttention" is a strong title.
+- [ ] **OSS PR** — contribute back to the paper's reference implementation (or the engine you benchmarked against) — a fix or benchmark you produced while reproducing it.
+- [ ] **Talk** — these repros make great follow-up talk material if your Phase 5 talk landed well.
