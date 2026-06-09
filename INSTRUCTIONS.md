@@ -8,7 +8,7 @@ This file explains how to actually *use* the workspace — not just what's in it
 
 ```
 study-gen-ai/
-├── ROADMAP.md            ← The full 6-phase plan with all resource links
+├── ROADMAP.md            ← The full 8-phase plan with all resource links
 ├── INSTRUCTIONS.md       ← (this file) How to use the workspace
 ├── NOTES.md              ← Your learning log — write in this every session
 ├── 00-prereqs/           ← Each phase folder has a README.md with a checklist
@@ -16,8 +16,9 @@ study-gen-ai/
 ├── 02-transformer/
 ├── 03-modern-llm/
 ├── 04-post-training/
-├── 05-paper-reproductions/
-└── 06-apps/
+├── 05-ml-systems/
+├── 06-paper-reproductions/
+└── 07-apps/
 ```
 
 ---

@@ -1,1 +1,5 @@
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/index.html) with code and examples.
+- https://www.deeplearningbook.org/
+- https://machinelearningmastery.com/deep-learning-with-pytorch/#packages
+- [Andrej Karpathy — Neural Networks: Zero to Hero](https://www.youtube.com/watch?v=PaCmpygFfXo&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
+- Michael Nielsen — _Neural Networks and Deep Learning_, Ch 1–2 (free, online; builds an MLP for MNIST in NumPy — pairs with this project): http://neuralnetworksanddeeplearning.com/chap1.html
