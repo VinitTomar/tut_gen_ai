@@ -83,31 +83,29 @@ Project: linear regression and a 2-layer MLP from scratch in NumPy, then re-impl
 
 **Learn first — Linear regression**
 
-- [ ] StatQuest — _Linear Regression, Clearly Explained_: https://www.youtube.com/watch?v=nk2CQITm_eo
-- [ ] StatQuest — _Gradient Descent, Step-by-Step_ (how linreg actually trains): https://www.youtube.com/watch?v=sDv4f4s2SB8
-- [ ] StatQuest — _Linear Regression in PyTorch_ (implementation walk-through): https://www.youtube.com/watch?v=iyn2zdALii8
-- [ ] Goodfellow _Deep Learning_ §5.1.4 — _Example: Linear Regression_ (formal treatment, ~1 page): https://www.deeplearningbook.org/contents/ml.html
+- [x] Machine Learning Mastery — _Training a Linear Regression Model in PyTorch_ (from-scratch implementation walk-through: manual forward pass, MSE, gradient descent): https://machinelearningmastery.com/training-a-linear-regression-model-in-pytorch/
+- [x] Goodfellow _Deep Learning_ §5.1.4 — _Example: Linear Regression_ (formal treatment, ~1 page): https://www.deeplearningbook.org/contents/ml.html
+- [x] StatQuest — _Gradient Descent, Step-by-Step_ (how linreg actually trains): https://www.youtube.com/watch?v=sDv4f4s2SB8
 
-**Learn first — MLP (Multi-Layer Perceptron)**
+**Learn first — MLP (Multi-Layer Perceptron aka Artificial Neural Network)**
 
-- [ ] Re-watch 3Blue1Brown _Neural Networks_ eps 1–2 with fresh eyes now that linreg makes sense
-- [ ] StatQuest — _Neural Networks Part 1, 2, 3_ (Inside the Black Box, Backprop Main Ideas, Backprop Details). Search on https://www.youtube.com/@statquest
-- [ ] **Andrej Karpathy — _Neural Networks: Zero to Hero_, video 1 (`micrograd`)** — builds autograd from scratch; the single most valuable video for an aspiring LLM engineer: https://www.youtube.com/playlist?list=PLAdk-EyP1ND8MqJEJnSvaoUShrAWYe51U
-- [ ] Karpathy — _Zero to Hero_ video 2 (`makemore` part 1) — bigram MLP from scratch in PyTorch
+- [x] **CS231n — _Minimal Neural Network Case Study_** (the key reference: 2-layer NN from scratch in NumPy on a synthetic 2D dataset, with manual backprop): https://cs231n.github.io/neural-networks-case-study/
 - [ ] Michael Nielsen — _Neural Networks and Deep Learning_, Ch 1–2 (free, online; builds an MLP for MNIST in NumPy — pairs with this project): http://neuralnetworksanddeeplearning.com/chap1.html
+
+_Go deeper after the project_ — Karpathy's _Neural Networks: Zero to Hero_ video 1 (`micrograd`) builds an autograd engine from scratch and is the single most valuable video for an aspiring LLM engineer. Best watched **after** you've done manual backprop yourself, so you can appreciate what autograd is automating: https://www.youtube.com/watch?v=VMj-3S1tku0&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ
 
 Suggested files in this folder:
 
-- `01_linreg_numpy.ipynb`
-- `02_mlp_numpy.ipynb`
-- `03_mlp_pytorch.ipynb`
-- `04_gradient_check.ipynb` ← compares manual gradients vs autograd
+- [x] `01_linreg_numpy.ipynb`
+- [x] `02_gradient_check.ipynb` ← compares manual gradients vs autograd
+- [x] `03_mlp_numpy.ipynb`
+- [x] `04_mlp_pytorch.ipynb`
 
 ## Done when
 
-- [ ] You can write a forward + backward pass for an MLP in pure NumPy without looking it up.
-- [ ] You can explain cross-entropy loss in one sentence.
-- [ ] You can write a PyTorch training loop from a blank file.
+- [x] You can write a forward + backward pass for an MLP in pure NumPy without looking it up.
+- [x] You can explain cross-entropy loss in one sentence.
+- [x] You can write a PyTorch training loop from a blank file.
 
 ## Setup checklist
 
