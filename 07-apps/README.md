@@ -1,9 +1,9 @@
-# Phase 6 — Real-World Applications: RAG, Agents, Production (4 weeks, ~55h)
+# Phase 7 — Real-World Applications: RAG, Agents, Production at Scale (4–5 weeks, ~65h)
 
-See `../ROADMAP.md` for the full plan. This README is the start-here checklist for Phase 6.
+See `../ROADMAP.md` for the full plan. This README is the start-here checklist for Phase 7.
 
 ## Goal
-Apply everything to ship something useful. This is where the theory pays off.
+Ship a production-grade LLM application. Your distributed-systems background means this phase should look more like "real production engineering" than "tutorial RAG demo."
 
 ## Suggested week-by-week
 
@@ -42,31 +42,31 @@ Project below.
 - **Evaluation:** RAGAS, custom evals, LLM-as-judge (and its failure modes)
 - **Production:** streaming, prompt caching, cost optimization, latency, observability (Langfuse, Arize)
 
-## Capstone project — two parts
+## Capstone project — build a system, not a demo
 
-### Part 1 — Domain RAG agent
-Pick a corpus you actually care about (your own notes, a textbook PDF, a codebase, a podcast transcript collection).
-- [ ] Ingest + chunk the corpus (try 2 chunking strategies, compare)
-- [ ] Build hybrid retrieval (BM25 + dense) + a reranker
-- [ ] Wrap it in a chat interface (CLI is fine; web UI is a stretch goal)
-- [ ] Build a small handcrafted eval set (~20–50 questions with expected answers)
-- [ ] Evaluate retrieval quality (recall@k) and answer quality (with RAGAS or LLM-as-judge)
+Required ingredients:
 
-### Part 2 — Fine-tuned domain model in the loop
-- [ ] Take the open model you fine-tuned in Phase 4 and integrate it as the generator
-- [ ] Compare it to using Claude or GPT as the generator on the same RAG pipeline
-- [ ] Document: what's the quality gap, where does the open model surprise you, what's the cost/latency tradeoff?
+1. **Domain RAG agent** over a corpus you care about (your own notes, codebase, podcast transcripts, etc.) with hybrid retrieval (BM25 + dense) and reranking.
+2. **Real eval set** — handcrafted golden dataset (50+ examples), retrieval metrics (recall@k), generation metrics (faithfulness, relevance), LLM-as-judge with at least one calibration check.
+3. **Cost & latency budgets enforced** — p95 latency target, $/1k-queries target, with measurements.
+4. **Observability** — every request traced, every eval run logged, failure modes visible (Langfuse or equivalent).
+5. **Two generator options compared:** Claude/GPT API vs your fine-tuned open model (Phase 4) served via your inference stack (Phase 5). Document the quality gap and where each wins.
+6. **Deployed** somewhere reachable (not just localhost). Render, Fly.io, Modal, or self-hosted.
+
+Write the whole thing up publicly. This is your capstone artifact and a key piece of your leadership track record.
 
 Suggested files:
 - `01_embeddings_demo/`
 - `02_chunking_experiments.ipynb`
-- `03_rag_pipeline/`           ← end-to-end RAG with hybrid retrieval + reranker
-- `04_eval_set.json`           ← your handcrafted eval questions
-- `05_eval_runs.ipynb`         ← retrieval + answer quality numbers
-- `06_open_vs_frontier_model.md`  ← writeup comparing your fine-tuned model to Claude/GPT
+- `03_rag_pipeline/`              ← end-to-end RAG with hybrid retrieval + reranker
+- `04_eval_set.json`             ← 50+ handcrafted golden questions
+- `05_eval_runs.ipynb`           ← retrieval (recall@k) + generation (faithfulness/relevance) numbers
+- `06_observability/`            ← Langfuse traces, dashboards, failure-mode notes
+- `07_open_vs_frontier_model.md` ← fine-tuned model vs Claude/GPT: quality, cost, latency
+- `08_deploy/`                   ← deployment config (Render/Fly.io/Modal/self-hosted)
 
 ## Done when
-- [ ] You have a deployed (even if just locally) end-to-end LLM application.
-- [ ] You can articulate when fine-tuning is worth it vs when prompting + RAG is enough.
+- [ ] You have a deployed, evaluated, observable LLM application.
+- [ ] You can articulate when fine-tuning is worth it vs prompting + RAG, with numbers.
 - [ ] You have an evaluation set and metrics, not just vibes.
-- [ ] You can explain at least 2 production concerns (e.g., prompt caching, streaming, cost) you actually had to deal with.
+- [ ] The system handles at least 10 concurrent users without falling over — you're an experienced engineer; make this real.
